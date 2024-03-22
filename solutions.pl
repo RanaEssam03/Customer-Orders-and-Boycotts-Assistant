@@ -11,14 +11,14 @@ list_orders(CustomerName,Orders):-
     customer(CustomerID,CustomerName),
     getAllOrders(CustomerID,1,Orders).
 
-getOrders(CustomerID, CurrentOrderID, Orders):- 
+getAllOrders(CustomerID, CurrentOrderID, Orders):- 
     \+ order(CustomerID, CurrentOrderID, _), % If there is no order for the given order ID then return empty list
      Orders = [].
 
-getOrders(CustomerID, CurrentOrderID, Orders):-
+getAllOrders(CustomerID, CurrentOrderID, Orders):-
     order(CustomerID, CurrentOrderID, Items),    % Get the items for the given order ID
     NextOrderID is CurrentOrderID + 1,  % Get the next order ID
-    getOrders(CustomerID, NextOrderID, Temp),  % Get the orders for the next order ID
+    getAllOrders(CustomerID, NextOrderID, Temp),  % Get the orders for the next order ID
     Orders = [order(CustomerID,CurrentOrderID, Items) | Temp].  % Add the current order to the list of orders
 
 
