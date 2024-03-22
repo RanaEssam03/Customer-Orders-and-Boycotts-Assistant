@@ -1,8 +1,9 @@
-:-consult(data).  % Load the data from the file data.pl
 /* make this code dynamic so that it can be updated at runtime. */
 :- dynamic item/3.
 :- dynamic alternative/2.
 :- dynamic boycott_company/2.
+
+:-consult(data).  % Load the data from the file data.pl
 
 
 % problem 1
@@ -113,9 +114,6 @@ add_to_alternative_list([Head|Tail],NewTail):-
      add_to_alternative_list(Tail,NewTail).
 
 
-isBoycott(ItemOrCompany) :-
-    boycott_company(ItemOrCompany, _);
-    alternative(ItemOrCompany, _).
 
 %____________________________________________________________
 
