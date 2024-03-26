@@ -6,10 +6,30 @@
 :-consult(data).  % Load the data from the file data.pl
 
 
+
+
+%_________________________________common  predicates ________________________________
+
+
+
+append([], L, L).
+append([H|T], L2, [H|NT]):-
+    append(T, L2, NT).
+
+reverseList([], []).
+reverseList([H|T], NL):-
+    reverseList(T, Temp),
+    append(Temp, [H], NL).
+
+
+%____________________________________________________________
+
+
 % problem 1
 list_orders(CustomerName,Orders):-
     customer(CustomerID,CustomerName),
-    getAllOrders(CustomerID,1,Orders).
+    getAllOrders(CustomerID,1,Temp),
+    reverseList(Temp, Orders), !.
 
 getAllOrders(CustomerID, CurrentOrderID, Orders):- 
     \+ order(CustomerID, CurrentOrderID, _), % If there is no order for the given order ID then return empty list
@@ -20,6 +40,8 @@ getAllOrders(CustomerID, CurrentOrderID, Orders):-
     NextOrderID is CurrentOrderID + 1,  % Get the next order ID
     getAllOrders(CustomerID, NextOrderID, Temp),  % Get the orders for the next order ID
     Orders = [order(CustomerID,CurrentOrderID, Items) | Temp].  % Add the current order to the list of orders
+
+
 
 
 
@@ -38,8 +60,11 @@ countOrdersOfCustomer(UserName,Count):-
 task 3
 If there is an order with a specific order id and customer id, then the items in the order are the items in the order with the same order id and customer id.
 */
+
 items_in_order(CustomerID, OrderID, Items) :-
-    order(CustomerID, OrderID, Items).
+    order(CustomerID, OrderID, Items);
+    customer(Temp, CustomerID), % if the given input is not the customer ID but the customer name
+    order(Temp, OrderID, Items).
 /*
 end of task 3
 */
