@@ -50,7 +50,9 @@ getAllOrders(CustomerID, CurrentOrderID, Orders):-
 
 % problem 2
 countOrdersOfCustomer(UserName,Count):-
-    findall(_,(customer(UserID,UserName),order(UserID,_,_)),Orders), length(Orders,Count).
+    customer(UserID,UserName), % Get the customer ID
+    getAllOrders(UserID,1,Orders), % Get all the orders for the given customer ID
+    getLength(Orders, Count),!.       
 
 
 %____________________________________________________________
@@ -61,10 +63,10 @@ task 3
 If there is an order with a specific order id and customer id, then the items in the order are the items in the order with the same order id and customer id.
 */
 
-items_in_order(CustomerID, OrderID, Items) :-
+getItemsInOrderById(CustomerID, OrderID, Items) :-
     order(CustomerID, OrderID, Items);
     customer(Temp, CustomerID), % if the given input is not the customer ID but the customer name
-    order(Temp, OrderID, Items).
+    order(Temp, OrderID, Items),!.
 /*
 end of task 3
 */
@@ -129,7 +131,7 @@ whyToBoycott(Name, Reason):-
 removeBoycottItemsFromAnOrder(UserName , OrderID, NewList):-
     customer(UserID,UserName),
     order(UserID,OrderID,Items),
-    add_to_alternative_list(Items,NewList).
+    add_to_alternative_list(Items,NewList),!.
 
 add_to_alternative_list([],[]).
 add_to_alternative_list([Head|Tail],[Head |NewTail]):-
@@ -173,7 +175,7 @@ update_order([Item|Rest], [NewItem|UpdatedRest], Username) :-
 replaceBoycottItemsFromAnOrder(Username, OrderID, NewList) :-
     order(CustomerID, OrderID, OldList),
     customer(CustomerID, Username), % Verify the username and order ID
-    update_order(OldList, NewList, Username).
+    update_order(OldList, NewList, Username),!.
 /*
 end of task 9
 */
@@ -186,7 +188,7 @@ end of task 9
 calcPriceAfterReplacingBoycottItemsFromAnOrder(UserName, OrderId, NewItems, TotalPrice) :-
     customer(ID, UserName),
     order(ID, OrderId, Items),
-    getNewItems(Items, NewItems, TotalPrice).
+    getNewItems(Items, NewItems, TotalPrice),!.
 
 
 % Get the alternative item for the given item if it exists else return the same item
