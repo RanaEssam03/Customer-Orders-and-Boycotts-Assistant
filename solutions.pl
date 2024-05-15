@@ -233,6 +233,7 @@ remove_item(Item, Company, Price) :-
 
 % Add a new alternative item to the knowledge base
 add_alternative(Item, Alternative) :- 
+    isBoycott(Item), % Check if the item is boycotted
     assert(alternative(Item, Alternative)).
 
 % Remove an alternative item from the knowledge base
