@@ -43,9 +43,9 @@ After installing SWI-Prolog, you can run the program by following these steps:
 
 1. Clone the repository or download the files to your local machine.
 2. Open a terminal or command prompt window.
-3. Navigate to the directory containing the `data.pl` file and your Prolog solution files.
+3. Navigate to the directory containing the cloned repository.
 4. Start the SWI-Prolog interpreter by typing `swipl`.
-5. In the SWI-Prolog environment, load the `data.pl` file by typing `[data].`
+5. Consult  `['solutions.pl'].`
 6. Now you can query the database using the predicates provided in the solution files.
 
 ### Example Query
